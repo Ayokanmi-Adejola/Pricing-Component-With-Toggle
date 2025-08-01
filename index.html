@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+  <title>Frontend Mentor | Pricing Component with Toggle</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      background: hsl(240, 78%, 98%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 375px;
+      height: 658px;
+      background: url('./images/bg-top.svg') no-repeat;
+      background-size: contain;
+      z-index: -1;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 353px;
+      height: 304px;
+      background: url('./images/bg-bottom.svg') no-repeat;
+      background-size: contain;
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 1110px;
+      width: 100%;
+      padding: 0 24px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .title {
+      font-size: 32px;
+      color: hsl(232, 13%, 33%);
+      margin-bottom: 40px;
+    }
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .toggle-label {
+      color: hsl(233, 13%, 49%);
+      font-size: 15px;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 56px;
+      height: 32px;
+      background: linear-gradient(135deg, hsl(237, 73%, 79%), hsl(238, 63%, 64%));
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-switch:hover {
+      opacity: 0.8;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 24px;
+      height: 24px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-switch.monthly .toggle-slider {
+      transform: translateX(24px);
+    }
+
+    .pricing-cards {
+      display: flex;
+      gap: 0;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .pricing-card {
+      background: white;
+      padding: 31px 29px;
+      text-align: center;
+      width: 350px;
+      position: relative;
+    }
+
+    .pricing-card:first-child {
+      border-radius: 10px 0 0 10px;
+    }
+
+    .pricing-card:last-child {
+      border-radius: 0 10px 10px 0;
+    }
+
+    .pricing-card.featured {
+      background: linear-gradient(135deg, hsl(237, 73%, 79%), hsl(238, 63%, 64%));
+      color: white;
+      padding: 55px 29px;
+      border-radius: 10px;
+      z-index: 1;
+    }
+
+    .card-title {
+      font-size: 18px;
+      margin-bottom: 24px;
+      color: hsl(233, 13%, 49%);
+    }
+
+    .featured .card-title {
+      color: white;
+    }
+
+    .price {
+      font-size: 72px;
+      letter-spacing: -2.16px;
+      margin-bottom: 32px;
+      color: hsl(232, 13%, 33%);
+    }
+
+    .featured .price {
+      color: white;
+    }
+
+    .price-monthly {
+      display: none;
+    }
+
+    .monthly-active .price-annual {
+      display: none;
+    }
+
+    .monthly-active .price-monthly {
+      display: block;
+    }
+
+    .features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+
+    .features li {
+      padding: 12px 0;
+      border-top: 1px solid hsl(240, 78%, 98%);
+      color: hsl(233, 13%, 49%);
+      font-size: 15px;
+    }
+
+    .features li:last-child {
+      border-bottom: 1px solid hsl(240, 78%, 98%);
+    }
+
+    .featured .features li {
+      border-color: rgba(255, 255, 255, 0.25);
+      color: white;
+    }
+
+    .learn-more-btn {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid linear-gradient(135deg, hsl(237, 73%, 79%), hsl(238, 63%, 64%));
+      background: linear-gradient(135deg, hsl(237, 73%, 79%), hsl(238, 63%, 64%));
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1.39px;
+      text-transform: uppercase;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .learn-more-btn:hover {
+      background: transparent;
+      color: hsl(237, 73%, 79%);
+      border: 1px solid hsl(237, 73%, 79%);
+    }
+
+    .featured .learn-more-btn {
+      background: white;
+      color: hsl(237, 73%, 79%);
+      border: 1px solid white;
+    }
+
+    .featured .learn-more-btn:hover {
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+    }
+
+    .attribution {
+      font-size: 11px;
+      text-align: center;
+      margin-top: 50px;
+      color: hsl(233, 13%, 49%);
+    }
+
+    .attribution a {
+      color: hsl(228, 45%, 44%);
+    }
+
+    @media (max-width: 768px) {
+      body::before {
+        width: 280px;
+        height: 492px;
+      }
+
+      body::after {
+        width: 264px;
+        height: 227px;
+      }
+
+      .title {
+        font-size: 28px;
+        margin-bottom: 32px;
+      }
+
+      .header {
+        margin-bottom: 64px;
+      }
+
+      .pricing-cards {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .pricing-card {
+        width: 327px;
+        border-radius: 0;
+      }
+
+      .pricing-card:first-child {
+        border-radius: 10px 10px 0 0;
+      }
+
+      .pricing-card:last-child {
+        border-radius: 0 0 10px 10px;
+      }
+
+      .featured {
+        border-radius: 10px;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 class="title">Our Pricing</h1>
+      <div class="toggle-container">
+        <span class="toggle-label">Annually</span>
+        <div class="toggle-switch" id="toggleSwitch">
+          <div class="toggle-slider"></div>
+        </div>
+        <span class="toggle-label">Monthly</span>
+      </div>
+    </div>
+
+    <div class="pricing-cards">
+      <div class="pricing-card">
+        <h2 class="card-title">Basic</h2>
+        <div class="price">
+          <span class="price-annual">&dollar;19.99</span>
+          <span class="price-monthly">&dollar;199.99</span>
+        </div>
+        <ul class="features">
+          <li>500 GB Storage</li>
+          <li>2 Users Allowed</li>
+          <li>Send up to 3 GB</li>
+        </ul>
+        <button class="learn-more-btn">Learn More</button>
+      </div>
+
+      <div class="pricing-card featured">
+        <h2 class="card-title">Professional</h2>
+        <div class="price">
+          <span class="price-annual">&dollar;24.99</span>
+          <span class="price-monthly">&dollar;249.99</span>
+        </div>
+        <ul class="features">
+          <li>1 TB Storage</li>
+          <li>5 Users Allowed</li>
+          <li>Send up to 10 GB</li>
+        </ul>
+        <button class="learn-more-btn">Learn More</button>
+      </div>
+
+      <div class="pricing-card">
+        <h2 class="card-title">Master</h2>
+        <div class="price">
+          <span class="price-annual">&dollar;39.99</span>
+          <span class="price-monthly">&dollar;399.99</span>
+        </div>
+        <ul class="features">
+          <li>2 TB Storage</li>
+          <li>10 Users Allowed</li>
+          <li>Send up to 20 GB</li>
+        </ul>
+        <button class="learn-more-btn">Learn More</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+    Coded by <a href="#">Your Name Here</a>.
+  </div>
+
+  <script>
+    const toggleSwitch = document.getElementById('toggleSwitch');
+    const body = document.body;
+
+    toggleSwitch.addEventListener('click', function() {
+      this.classList.toggle('monthly');
+      body.classList.toggle('monthly-active');
+    });
+
+    // Keyboard accessibility
+    toggleSwitch.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.click();
+      }
+    });
+
+    // Make toggle focusable
+    toggleSwitch.setAttribute('tabindex', '0');
+  </script>
+</body>
+</html>
