@@ -135,4 +135,8 @@ pricing-component-with-toggle/
 - Challenge by [Frontend Mentor](https://www.frontendmentor.io)
 - Design inspiration from the Frontend Mentor community
 - Icons and graphics provided by Frontend Mentor
-# Pricing-Component-With-Toggle
+
+## 👨‍💻 Author
+
+
+- Frontend Mentor: [@Ayokanmi-Adejola](https://www.frontendmentor.io/profile/Ayokanmi-Adejola)
